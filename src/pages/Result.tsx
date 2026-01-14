@@ -56,20 +56,19 @@ export const Result = () => {
     ? linesParam.split(',').map(Number) as LineType[]
     : binary.split('').map(b => (b === '1' ? 7 : 8)) as LineType[];
   
-  const hexagram = HEXAGRAMS_DATA[binary] || {
-    id: binary,
-    name: "待解卦象",
-    pinyin: "Dài Jiě Guà Xiàng",
-    binary: binary,
-    interpretation: {
-      title: "卦辞诠释",
-      content: [
-        "此卦象之详细解读正在完善中...",
-        "建议参考《易经》对应卦辞，或再次至诚祈愿，摇掷铜钱。",
-        "易经之道，存乎一心，敬请期待完整数据库更新。"
-      ]
-    }
-  };
+  const hexagramData = HEXAGRAMS_DATA[binary];
+  
+  if (!hexagramData) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-2xl font-traditional text-ink/60">卦象解析中...</p>
+      </div>
+    );
+  }
+
+  const hexagram = hexagramData;
+
+  const [activeTab, setActiveTab] = React.useState<'gua' | 'yao' | 'expert'>('gua');
 
   return (
     <div className="h-screen result-bg relative flex flex-col items-center py-6 px-8 overflow-hidden paper-inner-shadow">
@@ -95,13 +94,13 @@ export const Result = () => {
         <p className="text-sm font-traditional text-ink/40 tracking-[0.5em] uppercase">Interpretation</p>
       </motion.div>
 
-      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch relative z-10 flex-1 min-h-0 mb-6">
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative z-10 flex-1 min-h-0 mb-6">
         {/* Left Section: Hexagram Symbol (Compact) */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2 flex flex-col items-center justify-center gap-8 chinese-card p-10 rounded-[2.5rem] relative group"
+          className="lg:col-span-4 flex flex-col items-center justify-center gap-8 chinese-card p-10 rounded-[2.5rem] relative group"
         >
           <div className="absolute top-6 left-6 w-12 h-12 border-t-2 border-l-2 border-traditional-red/10 group-hover:border-traditional-red/40 transition-all duration-700"></div>
           <div className="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-traditional-red/10 group-hover:border-traditional-red/40 transition-all duration-700"></div>
@@ -128,39 +127,123 @@ export const Result = () => {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="lg:col-span-3 flex flex-col gap-8 chinese-card p-10 lg:p-12 rounded-[2.5rem] relative min-h-0"
+          className="lg:col-span-8 flex flex-col chinese-card p-8 lg:p-10 rounded-[2.5rem] relative min-h-0 overflow-hidden"
         >
-          <div className="flex items-start gap-6">
-            <div className="flex flex-col items-center">
-              <div className="w-2 h-2 rounded-full bg-traditional-red mb-1"></div>
-              <div className="w-px h-12 bg-gradient-to-b from-traditional-red to-transparent"></div>
-            </div>
-            <div>
-              <h3 className="text-3xl font-calligraphy text-ink mb-1">卦辞诠释</h3>
-              <p className="text-sm font-traditional text-ink/30 tracking-widest uppercase italic">Detailed Interpretation</p>
-            </div>
+          {/* Tabs Navigation */}
+          <div className="flex gap-4 mb-8 border-b border-ink/5 pb-2">
+            {[
+              { id: 'gua', label: '卦辞详解', icon: '卦' },
+              { id: 'yao', label: '爻辞解读', icon: '爻' },
+              { id: 'expert', label: '邵雍经解', icon: '解' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`relative px-6 py-2 transition-all duration-300 group ${activeTab === tab.id ? 'text-traditional-red' : 'text-ink/40 hover:text-ink/60'}`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${activeTab === tab.id ? 'border-traditional-red bg-traditional-red/5' : 'border-ink/20 group-hover:border-ink/40'}`}>
+                    {tab.icon}
+                  </span>
+                  <span className="text-xl font-calligraphy tracking-wider">{tab.label}</span>
+                </div>
+                {activeTab === tab.id && (
+                  <motion.div 
+                    layoutId="activeTab"
+                    className="absolute bottom-[-9px] left-0 right-0 h-0.5 bg-traditional-red"
+                  />
+                )}
+              </button>
+            ))}
           </div>
 
-          <div className="space-y-6 font-traditional text-ink overflow-y-auto pr-6 custom-scrollbar flex-1 min-h-0">
-            {hexagram.interpretation.content.map((text, i) => (
+          <div className="flex-1 overflow-y-auto pr-4 custom-scrollbar">
+            {activeTab === 'gua' && (
               <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.15 }}
-                className="flex gap-6 group/item"
+                className="space-y-8 font-traditional"
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg border border-traditional-red/20 flex items-center justify-center text-traditional-red/40 font-bold text-lg group-hover/item:border-traditional-red group-hover/item:text-traditional-red transition-all duration-500 transform group-hover/item:rotate-12">
-                  {i + 1}
+                <div className="bg-traditional-red/5 p-6 rounded-2xl border border-traditional-red/10">
+                  <h4 className="text-traditional-red text-sm mb-4 tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-traditional-red"></span>
+                    卦辞原文
+                  </h4>
+                  <p className="text-2xl leading-relaxed text-ink font-medium">{hexagram.originalText}</p>
                 </div>
-                <div className="flex flex-col gap-1">
-                   <p className="text-xl leading-[1.6] text-justify font-medium text-ink/90 group-hover/item:text-ink transition-colors duration-300">
-                    {text}
-                  </p>
-                  <div className="h-px w-0 group-hover/item:w-full bg-traditional-red/10 transition-all duration-700"></div>
+
+                <div className="space-y-4">
+                  <h4 className="text-traditional-red text-sm tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-traditional-red"></span>
+                    象曰
+                  </h4>
+                  <p className="text-xl leading-relaxed text-ink/80 italic">{hexagram.xiangCi}</p>
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-ink/5">
+                  <h4 className="text-traditional-red text-sm tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-traditional-red"></span>
+                    白话解析
+                  </h4>
+                  <p className="text-lg leading-loose text-ink/70 text-justify">{hexagram.explanation}</p>
                 </div>
               </motion.div>
-            ))}
+            )}
+
+            {activeTab === 'yao' && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-6 font-traditional"
+              >
+                {hexagram.yaoCi.map((yao, idx) => {
+                  const isMoving = lines[idx] === 6 || lines[idx] === 9;
+                  return (
+                    <div 
+                      key={idx} 
+                      className={`p-6 rounded-2xl border transition-all duration-500 ${isMoving ? 'bg-traditional-red/5 border-traditional-red/20 shadow-sm' : 'border-ink/5 hover:border-ink/10'}`}
+                    >
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-3">
+                          <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${isMoving ? 'bg-traditional-red text-white' : 'bg-ink/5 text-ink/40'}`}>
+                            {idx + 1}
+                          </span>
+                          <h5 className={`text-xl font-medium ${isMoving ? 'text-traditional-red' : 'text-ink/80'}`}>{yao.ci}</h5>
+                        </div>
+                        {isMoving && (
+                          <span className="px-3 py-1 bg-traditional-red/10 text-traditional-red text-xs rounded-full border border-traditional-red/20 animate-pulse">
+                            动爻 (关键解读)
+                          </span>
+                        )}
+                      </div>
+                      <div className="space-y-3 pl-11">
+                        <p className="text-lg text-ink/70 leading-relaxed">{yao.explanation}</p>
+                        {yao.shaoYong && (
+                          <div className="pt-2 mt-2 border-t border-ink/5">
+                            <p className="text-sm text-traditional-red/60 font-medium">断语：{yao.shaoYong}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                }).reverse()} {/* 逆序显示，从上爻到底爻？通常易经从初爻（下）到上爻（上）。UI上从上到下显示比较符合阅读习惯，这里我们显示初爻在最上面还是最下面？代码里 idx 0 是初爻。为了阅读习惯，我们保持 idx 0 在最上面，或者标注清楚。这里 reverse() 之后 idx 5 (上爻) 在最上面。 */}
+              </motion.div>
+            )}
+
+            {activeTab === 'expert' && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-6 font-traditional"
+              >
+                <div className="chinese-card-inner p-8 bg-ink/[0.02] border border-ink/5 rounded-3xl">
+                  <h4 className="text-2xl font-calligraphy text-ink mb-6 border-b border-ink/10 pb-4">邵雍经解</h4>
+                  <div className="text-lg leading-loose text-ink/80 whitespace-pre-line text-justify">
+                    {hexagram.shaoYong}
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
         </motion.div>
       </div>
