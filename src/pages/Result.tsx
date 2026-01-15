@@ -70,6 +70,44 @@ export const Result = () => {
 
   const [activeTab, setActiveTab] = React.useState<'gua' | 'yao' | 'expert'>('gua');
 
+  // 解析名家解卦内容
+  const expertSections = React.useMemo(() => {
+    if (!hexagram.shaoYong) return [];
+    
+    const content = hexagram.shaoYong;
+    const sections: { title: string; content: string }[] = [];
+    
+    // 定义关键字及其对应的小标题
+    const markers = [
+      { key: '台湾国学大儒傅佩荣解', title: '台湾国学大儒傅佩荣解' },
+      { key: '传统解卦', title: '传统解卦' },
+      { key: '台湾张铭仁解卦', title: '台湾张铭仁解卦' }
+    ];
+    
+    let lastIndex = 0;
+    let currentTitle = '北宋易学家邵雍解';
+    
+    markers.forEach((marker) => {
+      const index = content.indexOf(marker.key);
+      if (index !== -1) {
+        const sectionContent = content.substring(lastIndex, index).trim();
+        if (sectionContent) {
+          sections.push({ title: currentTitle, content: sectionContent });
+        }
+        currentTitle = marker.title;
+        lastIndex = index + marker.key.length;
+      }
+    });
+    
+    // 添加最后一个部分
+    const remainingContent = content.substring(lastIndex).trim();
+    if (remainingContent) {
+      sections.push({ title: currentTitle, content: remainingContent });
+    }
+    
+    return sections;
+  }, [hexagram.shaoYong]);
+
   return (
     <div className="h-screen result-bg relative flex flex-col items-center py-6 px-8 overflow-hidden paper-inner-shadow">
       {/* 纸张纹理层 */}
@@ -134,7 +172,7 @@ export const Result = () => {
             {[
               { id: 'gua', label: '卦辞详解', icon: '卦' },
               { id: 'yao', label: '爻辞解读', icon: '爻' },
-              { id: 'expert', label: '邵雍经解', icon: '解' }
+              { id: 'expert', label: '名家解卦', icon: '名' }
             ].map(tab => (
               <button
                 key={tab.id}
@@ -237,9 +275,19 @@ export const Result = () => {
                 className="space-y-6 font-traditional"
               >
                 <div className="chinese-card-inner p-8 bg-ink/[0.02] border border-ink/5 rounded-3xl">
-                  <h4 className="text-2xl font-calligraphy text-ink mb-6 border-b border-ink/10 pb-4">邵雍经解</h4>
-                  <div className="text-lg leading-loose text-ink/80 whitespace-pre-line text-justify">
-                    {hexagram.shaoYong}
+                  <h4 className="text-3xl font-calligraphy text-ink mb-8 border-b border-ink/10 pb-4">名家解卦</h4>
+                  <div className="space-y-10">
+                    {expertSections.map((section, idx) => (
+                      <div key={idx} className="relative">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-1.5 h-6 bg-traditional-red rounded-full"></div>
+                          <h5 className="text-2xl font-calligraphy text-traditional-red">{section.title}</h5>
+                        </div>
+                        <div className="text-lg leading-loose text-ink/80 whitespace-pre-line text-justify pl-4 border-l border-ink/5 ml-0.5">
+                          {section.content}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
