@@ -115,9 +115,9 @@ export const Home = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center relative z-10"
+        className="text-center relative z-10 mt-16"
       >
-        <h1 className="text-6xl font-calligraphy mb-2 text-ink drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] tracking-tight flex items-center justify-center gap-2">
+        <h1 className="text-7xl font-calligraphy mb-3 text-ink drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] tracking-tight flex items-center justify-center gap-3">
           <span>周易</span>
           <motion.img 
             initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
@@ -125,13 +125,13 @@ export const Home = () => {
             transition={{ duration: 1.2, ease: "easeOut" }}
             src="/logo.svg" 
             alt="Logo" 
-            className="w-10 h-10 object-contain mix-blend-multiply opacity-90"
+            className="w-12 h-12 object-contain mix-blend-multiply opacity-90"
           />
           <span>占卜</span>
         </h1>
         <div className="flex items-center justify-center gap-4">
           <div className="h-[1px] w-8 bg-ink/20"></div>
-          <p className="text-lg tracking-[0.8em] text-ink/70 font-traditional uppercase">古法灵签 · 运势指引</p>
+          <p className="text-xl tracking-[0.3em] text-ink/70 font-traditional uppercase">Divination By Coin Tossing</p>
           <div className="h-[1px] w-8 bg-ink/20"></div>
         </div>
       </motion.div>
@@ -147,7 +147,7 @@ export const Home = () => {
             ))}
           </div>
           <p className="text-ink/40 text-xs font-traditional tracking-widest uppercase mt-2">
-            {isTossing ? "正在感应天机..." : lines.length === 0 ? "至诚感通 · 摇掷铜钱" : `已成第 ${lines.length} 爻`}
+            {isTossing ? "正在感应天机..." : lines.length === 0 ? "" : `已成第 ${lines.length} 爻`}
           </p>
         </div>
 
@@ -248,27 +248,29 @@ export const Home = () => {
             {!isComplete ? (
               <motion.button
                 key="toss"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, backgroundColor: "#b72326" }}
+                animate={{ opacity: 1, scale: 1, backgroundColor: "#b72326" }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                whileHover={{ scale: 1.05, backgroundColor: "#1a1a1a" }}
+                whileHover={{ scale: 1.05, backgroundColor: "#991b1b" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToss}
                 disabled={isTossing || lines.length >= 6}
-                className="px-16 py-4 bg-ink text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
+                style={{ backgroundColor: "#b72326" }}
+                className="px-16 py-4 text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-traditional-red/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 {isTossing ? "摇卦中..." : "摇掷铜钱"}
               </motion.button>
             ) : (
               <motion.button
                 key="result"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.05, backgroundColor: "#b72326" }}
+                initial={{ opacity: 0, y: 20, backgroundColor: "#b72326" }}
+                animate={{ opacity: 1, y: 0, backgroundColor: "#b72326" }}
+                whileHover={{ scale: 1.05, backgroundColor: "#991b1b" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleGoToResult}
-                className="px-16 py-4 bg-traditional-red text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] transition-all duration-500 relative group overflow-hidden animate-pulse"
+                style={{ backgroundColor: "#b72326" }}
+                className="px-16 py-4 text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] transition-all duration-500 relative group overflow-hidden animate-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 查看结果

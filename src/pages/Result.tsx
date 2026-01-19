@@ -242,7 +242,7 @@ export const Result = () => {
             <img 
               src="/logo.svg" 
               alt="Logo" 
-              className="w-10 h-10 object-contain mix-blend-multiply opacity-80"
+              className="w-12 h-12 object-contain mix-blend-multiply opacity-80"
             />
             <span>解卦</span>
           </h1>
@@ -585,12 +585,15 @@ export const Result = () => {
         className="fixed bottom-8 left-0 right-0 flex justify-center z-50 pointer-events-none"
       >
         <motion.button
-          whileHover={{ scale: 1.05, translateY: -2 }}
+          initial={{ backgroundColor: "#b72326" }}
+          animate={{ backgroundColor: "#b72326" }}
+          whileHover={{ scale: 1.05, translateY: -2, backgroundColor: "#991b1b" }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/')}
-          className="group relative flex items-center gap-3 px-8 py-3 bg-ink/90 backdrop-blur-md text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 overflow-hidden transition-all duration-300 pointer-events-auto"
+          style={{ backgroundColor: "#b72326" }}
+          className="group relative flex items-center gap-3 px-8 py-3 text-white rounded-full shadow-[0_10px_30px_rgba(183,35,38,0.3)] border border-white/10 overflow-hidden transition-all duration-300 pointer-events-auto"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-traditional-red/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <span className="text-lg font-calligraphy relative z-10 tracking-[0.15em]">再次占卜</span>
           <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:rotate-180 transition-transform duration-700 relative z-10">
             <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5 stroke-white stroke-2">
