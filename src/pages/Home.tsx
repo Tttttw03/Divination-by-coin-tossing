@@ -210,13 +210,12 @@ export const Home = () => {
                       
                       {/* 老阴老阳标记 */}
                       {lines[i] === 9 && (
-                        <div className="absolute -left-8 w-6 h-6 border-2 border-traditional-red rounded-full flex items-center justify-center text-traditional-red font-bold text-xs scale-75">
-                          ○
-                        </div>
+                        <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-traditional-red rounded-full"></div>
                       )}
                       {lines[i] === 6 && (
-                        <div className="absolute -left-8 w-6 h-6 flex items-center justify-center text-traditional-red font-bold text-lg scale-90">
-                          ×
+                        <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center">
+                          <div className="w-full h-0.5 bg-traditional-red rotate-45 absolute"></div>
+                          <div className="w-full h-0.5 bg-traditional-red -rotate-45 absolute"></div>
                         </div>
                       )}
                     </>
