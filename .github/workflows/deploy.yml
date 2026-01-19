@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 当推送到master分支时触发
+  push:
+    branches: [ master ]
+  # 允许手动触发
+  workflow_dispatch:
+
+# 设置权限，允许部署GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build output
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Vite默认构建输出目录是dist
+          path: './dist'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

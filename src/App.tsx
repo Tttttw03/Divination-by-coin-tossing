@@ -1,4 +1,5 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Result } from './pages/Result';
 
@@ -13,12 +14,12 @@ function App() {
         </filter>
       </svg>
       
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/result" element={<Result />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </>
   );
 }
