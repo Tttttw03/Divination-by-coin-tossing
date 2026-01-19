@@ -240,7 +240,7 @@ export const Result = () => {
           <h1 className="text-5xl font-calligraphy text-ink tracking-[0.1em] drop-shadow-sm flex items-center gap-3">
             <span>周易</span>
             <img 
-              src="/logo.svg" 
+              src="logo.svg" 
               alt="Logo" 
               className="w-12 h-12 object-contain mix-blend-multiply opacity-80"
             />

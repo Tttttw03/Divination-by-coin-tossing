@@ -21,7 +21,7 @@ const Coin = ({ isTossing, result }: { isTossing: boolean, result: 'heads' | 'ta
         {/* Front (Heads) - 使用用户上传的图片 */}
         <div className="absolute inset-0 w-full h-full rounded-full overflow-hidden shadow-2xl backface-hidden bg-transparent flex items-center justify-center">
           <img 
-            src="/coin-front.png" 
+            src="coin-front.png" 
             alt="Heads" 
             className="w-full h-full object-cover scale-[1.08]"
             style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.2))' }}
@@ -33,7 +33,7 @@ const Coin = ({ isTossing, result }: { isTossing: boolean, result: 'heads' | 'ta
         {/* Back (Tails) - 使用用户上传的图片 */}
         <div className="absolute inset-0 w-full h-full rounded-full overflow-hidden shadow-2xl [transform:rotateY(180deg)] backface-hidden bg-transparent flex items-center justify-center">
           <img 
-            src="/coin-back.png" 
+            src="coin-back.png" 
             alt="Tails" 
             className="w-full h-full object-cover scale-[1.08]"
             style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.2))' }}
@@ -123,7 +123,7 @@ export const Home = () => {
             initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            src="/logo.svg" 
+            src="logo.svg" 
             alt="Logo" 
             className="w-12 h-12 object-contain mix-blend-multiply opacity-90"
           />
