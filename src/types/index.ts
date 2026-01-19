@@ -3,7 +3,7 @@ export interface YaoData {
   xiang: string;
   explanation: string;
   shaoYong: string;
-  fuPeirong: {
+  fuPeirong?: {
     shiyun: string;
     caiyun: string;
     jiazhai: string;

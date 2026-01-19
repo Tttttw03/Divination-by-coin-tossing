@@ -48,6 +48,7 @@ const Coin = ({ isTossing, result }: { isTossing: boolean, result: 'heads' | 'ta
 
 export const Home = () => {
   const [isTossing, setIsTossing] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
   const [lines, setLines] = useState<LineType[]>([]);
   const [currentCoins, setCurrentCoins] = useState<('heads' | 'tails')[]>(['heads', 'heads', 'heads']);
   const navigate = useNavigate();
@@ -83,17 +84,20 @@ export const Home = () => {
       setLines(updatedLines);
       
       if (updatedLines.length === 6) {
-        // 完成 6 爻，跳转到结果页
-        // 传递完整爻象数据以便显示老阴老阳标记
-        const linesParam = updatedLines.join(',');
-        // 同时保留基础卦象 binary (1 为阳，0 为阴) 用于匹配数据库
-        const binaryResult = updatedLines.map(line => (line === 7 || line === 9) ? '1' : '0').join('');
-        
-        setTimeout(() => {
-          navigate(`/result?b=${binaryResult}&l=${linesParam}`);
-        }, 1000);
+        setIsComplete(true);
       }
     }, 1500);
+  };
+
+  const handleGoToResult = () => {
+    if (lines.length !== 6) return;
+    
+    // 传递完整爻象数据以便显示老阴老阳标记
+    const linesParam = lines.join(',');
+    // 同时保留基础卦象 binary (1 为阳，0 为阴) 用于匹配数据库
+    const binaryResult = lines.map(line => (line === 7 || line === 9) ? '1' : '0').join('');
+    
+    navigate(`/result?b=${binaryResult}&l=${linesParam}`);
   };
 
   return (
@@ -113,7 +117,18 @@ export const Home = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center relative z-10"
       >
-        <h1 className="text-6xl font-calligraphy mb-2 text-ink drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] tracking-tight">周易占卜</h1>
+        <h1 className="text-6xl font-calligraphy mb-2 text-ink drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)] tracking-tight flex items-center justify-center gap-2">
+          <span>周易</span>
+          <motion.img 
+            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            src="/logo.svg" 
+            alt="Logo" 
+            className="w-10 h-10 object-contain mix-blend-multiply opacity-90"
+          />
+          <span>占卜</span>
+        </h1>
         <div className="flex items-center justify-center gap-4">
           <div className="h-[1px] w-8 bg-ink/20"></div>
           <p className="text-lg tracking-[0.8em] text-ink/70 font-traditional uppercase">古法灵签 · 运势指引</p>
@@ -145,9 +160,9 @@ export const Home = () => {
         >
           <div className="flex items-center justify-center gap-3 group">
             <div className="w-8 h-8 rounded-full border border-traditional-red/20 flex items-center justify-center bg-white/30 backdrop-blur-sm group-hover:border-traditional-red/50 transition-all duration-500">
-              <span className="text-traditional-red font-bold text-sm font-calligraphy">祈</span>
+              <span className="text-traditional-red font-bold text-sm font-calligraphy">卜</span>
             </div>
-            <p className="text-[10px] font-bold text-ink/60 font-traditional">1.诚心祈愿</p>
+            <p className="text-[10px] font-bold text-ink/60 font-traditional">1.诚心卜问</p>
           </div>
 
           <div className="flex items-center justify-center gap-3 group">
@@ -161,7 +176,7 @@ export const Home = () => {
             <div className="w-8 h-8 rounded-full border border-traditional-red/20 flex items-center justify-center bg-white/30 backdrop-blur-sm group-hover:border-traditional-red/50 transition-all duration-500">
               <span className="text-traditional-red font-bold text-sm font-calligraphy">解</span>
             </div>
-            <p className="text-[10px] font-bold text-ink/60 font-traditional">3.解读卦辞</p>
+            <p className="text-[10px] font-bold text-ink/60 font-traditional">3.进行解读</p>
           </div>
         </motion.div>
 
@@ -229,16 +244,37 @@ export const Home = () => {
 
         {/* 4. 摇掷按钮 (Compact) */}
         <div className="flex flex-col items-center mt-2">
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: "#1a1a1a" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleToss}
-            disabled={isTossing || lines.length >= 6}
-            className="px-16 py-4 bg-ink text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-traditional-red/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            {isTossing ? "摇卦中..." : lines.length >= 6 ? "卦成 · 正在解析" : "摇掷铜钱"}
-          </motion.button>
+          <AnimatePresence mode="wait">
+            {!isComplete ? (
+              <motion.button
+                key="toss"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                whileHover={{ scale: 1.05, backgroundColor: "#1a1a1a" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleToss}
+                disabled={isTossing || lines.length >= 6}
+                className="px-16 py-4 bg-ink text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-traditional-red/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                {isTossing ? "摇卦中..." : "摇掷铜钱"}
+              </motion.button>
+            ) : (
+              <motion.button
+                key="result"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05, backgroundColor: "#b72326" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleGoToResult}
+                className="px-16 py-4 bg-traditional-red text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] transition-all duration-500 relative group overflow-hidden animate-pulse"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                查看结果
+              </motion.button>
+            )}
+          </AnimatePresence>
           
           <div className="mt-4 flex items-center gap-4 opacity-10">
             <div className="w-8 h-px bg-ink"></div>
