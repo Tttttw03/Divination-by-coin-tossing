@@ -3,7 +3,6 @@
 这是一个基于 React + TypeScript 开发的现代化周易占卜 Web 应用。系统模拟了经典的“金钱卦”占卜流程，结合精美的水墨风视觉设计，为用户提供沉浸式的卦象解读体验。
 
 ![界面预览](./preview.png)
-*(注：请将您的网页截图保存为 preview.png 放在此处)*
 
 ## ✨ 核心特性
 
@@ -26,32 +25,3 @@
 - **样式处理**: Tailwind CSS
 - **动画引擎**: Framer Motion
 - **路由管理**: React Router DOM
-
-## 🚀 快速开始
-
-### 环境准备
-确保您的电脑已安装 [Node.js](https://nodejs.org/)。
-
-### 安装依赖
-```bash
-npm install
-```
-
-### 本地开发
-```bash
-npm run dev
-```
-
-### 构建生产版本
-```bash
-npm run build
-```
-
-## 📁 目录结构
-- `src/assets`: 存放 WebP 优化后的图片资源及 SVG Logo。
-- `src/data`: 核心卦象数据库 (`hexagrams.ts`)。
-- `src/pages`: 包含首页 (`Home.tsx`) 与 结果页 (`Result.tsx`)。
-- `src/types`: TypeScript 类型定义。
-
----
-*保持敬畏之心，探索古老智慧。*
