@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 import { LineType } from '../types';
-import coinFront from '../assets/coin-front.png';
-import coinBack from '../assets/coin-back.png';
+import coinFront from '../assets/coin-front.webp';
+import coinBack from '../assets/coin-back.webp';
 import logo from '../assets/logo.svg';
 
 const Coin = ({ isTossing, result }: { isTossing: boolean, result: 'heads' | 'tails' }) => {

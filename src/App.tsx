@@ -5,10 +5,10 @@ import { Home } from './pages/Home';
 import { Result } from './pages/Result';
 
 // 导入资源以获取构建后的路径
-import coinFront from './assets/coin-front.png';
-import coinBack from './assets/coin-back.png';
+import coinFront from './assets/coin-front.webp';
+import coinBack from './assets/coin-back.webp';
 import logo from './assets/logo.svg';
-import bgMountains from './bg-mountains.png';
+import bgMountains from './bg-ChineseMountains.webp';
 
 const LoadingScreen = () => (
   <motion.div 
