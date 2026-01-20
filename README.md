@@ -1,30 +1,57 @@
-# React + TypeScript + Vite
+# 周易占卜 - 传统金钱卦系统
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这是一个基于 React + TypeScript 开发的现代化周易占卜 Web 应用。系统模拟了经典的“金钱卦”占卜流程，结合精美的水墨风视觉设计，为用户提供沉浸式的卦象解读体验。
 
-Currently, two official plugins are available:
+![界面预览](./preview.png)
+*(注：请将您的网页截图保存为 preview.png 放在此处)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ 核心特性
 
-## Expanding the ESLint configuration
+- **沉浸式占卜体验**：高品质硬币 3D 翻转动画，真实模拟三枚铜钱投掷过程。
+- **全自动排卦**：根据投掷结果自动生成六爻卦象，识别老阴、老阳及变卦。
+- **深度解析系统**：
+  - **卦辞详解**：提供基础卦象的含义解读。
+  - **爻辞解读**：针对动爻（变爻）提供精准的爻位解析。
+  - **名家解卦**：集成邵雍、傅佩荣、张铭仁等多位名家的解读视角。
+- **极致性能优化**：
+  - 全站资源 WebP 化，大幅降低首屏加载体积。
+  - 智能预加载系统，确保核心视觉资源（背景、Logo、硬币）秒开。
+  - 响应式适配，完美兼容 PC 端与移动端。
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠️ 技术栈
 
-- Configure the top-level `parserOptions` property like this:
+- **前端框架**: React 18
+- **开发语言**: TypeScript
+- **构建工具**: Vite
+- **样式处理**: Tailwind CSS
+- **动画引擎**: Framer Motion
+- **路由管理**: React Router DOM
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## 🚀 快速开始
+
+### 环境准备
+确保您的电脑已安装 [Node.js](https://nodejs.org/)。
+
+### 安装依赖
+```bash
+npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### 本地开发
+```bash
+npm run dev
+```
+
+### 构建生产版本
+```bash
+npm run build
+```
+
+## 📁 目录结构
+- `src/assets`: 存放 WebP 优化后的图片资源及 SVG Logo。
+- `src/data`: 核心卦象数据库 (`hexagrams.ts`)。
+- `src/pages`: 包含首页 (`Home.tsx`) 与 结果页 (`Result.tsx`)。
+- `src/types`: TypeScript 类型定义。
+
+---
+*保持敬畏之心，探索古老智慧。*
