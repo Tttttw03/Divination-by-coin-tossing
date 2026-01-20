@@ -29,6 +29,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  /* 优化：添加一个平滑过渡，当图片加载完成时显示 */
+  transition: background-image 0.5s ease-in-out;
 }
 
 .result-bg {
@@ -40,6 +42,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  transition: background-image 0.5s ease-in-out;
 }
 
 /* 纸张纤维纹理 - 更加真实的多层叠加 */

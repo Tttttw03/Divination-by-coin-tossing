@@ -220,7 +220,7 @@ export const Result = () => {
   }, [activeGua, hexagram, changeHexagram]);
 
   return (
-    <div className="min-h-screen result-bg relative flex flex-col items-center py-4 md:py-6 px-4 md:px-8 overflow-x-hidden paper-inner-shadow">
+    <div className="min-h-screen lg:h-[100dvh] result-bg relative flex flex-col items-center py-4 md:py-6 px-4 md:px-8 lg:overflow-hidden overflow-y-auto overflow-x-hidden paper-inner-shadow">
       {/* 纸张纹理层 */}
       <div className="paper-texture"></div>
 
@@ -251,7 +251,7 @@ export const Result = () => {
         <p className="text-xs md:text-sm font-traditional text-ink/40 tracking-[0.3em] md:tracking-[0.5em] uppercase">Interpretation</p>
       </motion.div>
 
-      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 flex-1 min-h-0 mb-6">
+      <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 lg:flex-1 min-h-0 mb-6">
         {/* Left Section: Hexagram Symbol & Interpretation Guide */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
@@ -354,11 +354,11 @@ export const Result = () => {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="lg:col-span-8 flex flex-col chinese-card p-6 lg:p-8 rounded-[2rem] relative min-h-0 overflow-hidden h-full"
+          className="lg:col-span-8 flex flex-col chinese-card p-6 lg:p-8 rounded-[2rem] relative min-h-0 lg:overflow-hidden h-auto lg:h-full mb-20 lg:mb-0"
         >
           {/* Tabs & Hexagram Switcher Navigation */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-ink/5 pb-4">
-            <div className="flex gap-2 overflow-x-auto custom-scrollbar whitespace-nowrap">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-ink/5 pb-2 sm:pb-4">
+            <div className="flex flex-nowrap items-center justify-between w-full sm:w-auto sm:justify-start sm:gap-2">
               {[
                 { id: 'gua', label: '卦辞详解', icon: '卦' },
                 { id: 'yao', label: '爻辞解读', icon: '爻' },
@@ -367,13 +367,13 @@ export const Result = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`relative px-4 py-1.5 transition-all duration-300 group ${activeTab === tab.id ? 'text-traditional-red' : 'text-ink/40 hover:text-ink/60'}`}
+                  className={`relative px-1 sm:px-4 py-1.5 transition-all duration-300 group flex-1 sm:flex-none ${activeTab === tab.id ? 'text-traditional-red' : 'text-ink/40 hover:text-ink/60'}`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] border ${activeTab === tab.id ? 'border-traditional-red bg-traditional-red/5' : 'border-ink/20 group-hover:border-ink/40'}`}>
+                  <div className="flex items-center justify-center gap-1 sm:gap-2">
+                    <span className={`w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[7px] sm:text-[10px] border ${activeTab === tab.id ? 'border-traditional-red bg-traditional-red/5' : 'border-ink/20 group-hover:border-ink/40'}`}>
                       {tab.icon}
                     </span>
-                    <span className="text-lg font-calligraphy tracking-wider">{tab.label}</span>
+                    <span className="text-sm sm:text-lg font-calligraphy tracking-wider whitespace-nowrap">{tab.label}</span>
                   </div>
                   {activeTab === tab.id && (
                     <motion.div 
@@ -432,13 +432,13 @@ export const Result = () => {
                 <div className="font-traditional">
                   <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
                     <div className="w-1 h-4 bg-traditional-red rounded-full"></div>
-                    卦辞
+                    卦辞原文
                   </h3>
-                  <div className="p-5 bg-ink/[0.02] rounded-2xl border border-ink/5 relative group">
-                    <p className="text-xl leading-relaxed text-ink/90 font-medium mb-4 relative z-10">
+                  <div className="p-5 bg-ink/[0.02] rounded-2xl border border-ink/5 relative group lg:max-h-[180px] lg:h-auto h-auto lg:overflow-y-auto overflow-visible custom-scrollbar">
+                    <p className="text-lg md:text-xl leading-relaxed text-ink/90 font-medium mb-4 relative z-10">
                       {(activeGua === 'original' ? hexagram : changeHexagram)?.originalText}
                     </p>
-                    <p className="text-base leading-relaxed text-ink/60 italic relative z-10">
+                    <p className="text-sm md:text-base leading-relaxed text-ink/60 italic relative z-10">
                       {(activeGua === 'original' ? hexagram : changeHexagram)?.xiangCi}
                     </p>
                   </div>
@@ -449,8 +449,8 @@ export const Result = () => {
                     <div className="w-1 h-4 bg-traditional-red rounded-full"></div>
                     现代解析
                   </h3>
-                  <div className="p-5 bg-ink/[0.01] rounded-2xl border border-ink/5">
-                    <p className="text-base leading-relaxed text-ink/70 whitespace-pre-wrap">
+                  <div className="p-5 bg-ink/[0.01] rounded-2xl border border-ink/5 lg:max-h-[300px] lg:h-auto h-auto lg:overflow-y-auto overflow-visible custom-scrollbar">
+                    <p className="text-sm md:text-base leading-relaxed text-ink/70 whitespace-pre-wrap">
                       {(activeGua === 'original' ? hexagram : changeHexagram)?.explanation}
                     </p>
                   </div>
@@ -501,17 +501,17 @@ export const Result = () => {
                   return (
                     <div 
                       key={idx} 
-                      className={`p-5 rounded-2xl transition-all duration-300 border ${
+                      className={`p-5 rounded-2xl transition-all duration-300 border lg:max-h-[250px] lg:h-auto h-auto lg:overflow-y-auto overflow-visible custom-scrollbar ${
                         highlightType === 'moving' 
-                          ? 'bg-traditional-red/[0.03] border-traditional-red/20 shadow-sm' 
+                          ? 'bg-traditional-red/[0.03] border-traditional-red/20 shadow-[0_4px_20px_rgba(183,35,38,0.05)]' 
                           : highlightType === 'static'
-                            ? 'bg-ink/[0.03] border-ink/20 shadow-sm'
-                            : 'bg-white border-ink/5 opacity-60 grayscale-[0.5]'
+                            ? 'bg-ink/[0.02] border-ink/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)]'
+                            : 'bg-transparent border-ink/5 opacity-60'
                       }`}
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-3">
-                          <span className={`px-2 py-0.5 rounded text-xs ${
+                          <span className={`px-2 py-0.5 rounded text-[10px] md:text-xs ${
                             highlightType === 'moving' 
                               ? 'bg-traditional-red text-white' 
                               : highlightType === 'static'
@@ -520,21 +520,21 @@ export const Result = () => {
                           }`}>
                             {['初爻', '二爻', '三爻', '四爻', '五爻', '上爻', binary === "111111" ? '用九' : '用六'][idx]}
                           </span>
-                          <span className="text-lg font-bold text-ink">
+                          <span className="text-base md:text-lg font-bold text-ink">
                             {yao.ci.split('。')[0]}
                           </span>
                         </div>
                         {highlightType !== 'none' && (
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                          <span className={`text-[9px] md:text-[10px] px-2 py-0.5 rounded-full ${
                             highlightType === 'moving' ? 'bg-traditional-red/10 text-traditional-red' : 'bg-ink/10 text-ink/60'
                           }`}>
                             {highlightType === 'moving' ? '动爻 · 重点参考' : '不变爻 · 重点参考'}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-ink/60 italic mb-3">{yao.xiang}</p>
+                      <p className="text-xs md:text-sm text-ink/60 italic mb-3">{yao.xiang}</p>
                       <div className="pl-4 border-l-2 border-ink/5 mb-3">
-                        <p className="text-sm text-ink/80 leading-relaxed whitespace-pre-wrap">{yao.explanation}</p>
+                        <p className="text-xs md:text-sm text-ink/80 leading-relaxed whitespace-pre-wrap">{yao.explanation}</p>
                       </div>
                       
                       {yao.shaoYong && (
@@ -554,23 +554,28 @@ export const Result = () => {
 
             {activeTab === 'expert' && (
               <motion.div 
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="space-y-6"
+                className="space-y-4"
               >
-                {expertSections.map((section, idx) => (
-                  <div key={idx} className="font-traditional">
-                    <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-                      <div className="w-1 h-4 bg-traditional-red rounded-full"></div>
-                      {section.title}
-                    </h3>
-                    <div className="p-5 bg-ink/[0.01] rounded-2xl border border-ink/5">
-                      <p className="text-base leading-relaxed text-ink/70 whitespace-pre-wrap">
-                        {section.content}
-                      </p>
+                {expertSections.map((section, idx) => {
+                  const isScrollSection = section.title.includes('传统解卦') || section.title.includes('台湾张铭仁解卦');
+                  return (
+                    <div key={idx} className="font-traditional">
+                      <h3 className="text-lg font-bold text-ink mb-1.5 flex items-center gap-2">
+                        <div className="w-1 h-4 bg-traditional-red rounded-full"></div>
+                        {section.title}
+                      </h3>
+                      <div className={`p-4 bg-ink/[0.01] rounded-2xl border border-ink/5 lg:max-h-[300px] lg:h-auto lg:overflow-y-auto custom-scrollbar ${
+                        isScrollSection ? 'h-[250px] overflow-y-auto' : 'h-auto overflow-visible'
+                      }`}>
+                        <p className="text-sm md:text-base leading-relaxed text-ink/70 whitespace-pre-wrap">
+                          {section.content}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </motion.div>
             )}
           </div>
