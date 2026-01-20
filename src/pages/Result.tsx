@@ -220,7 +220,7 @@ export const Result = () => {
   }, [activeGua, hexagram, changeHexagram]);
 
   return (
-    <div className="h-screen result-bg relative flex flex-col items-center py-6 px-8 overflow-hidden paper-inner-shadow">
+    <div className="min-h-screen result-bg relative flex flex-col items-center py-4 md:py-6 px-4 md:px-8 overflow-x-hidden paper-inner-shadow">
       {/* 纸张纹理层 */}
       <div className="paper-texture"></div>
 
@@ -233,22 +233,22 @@ export const Result = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col items-center mb-6 relative z-10"
+        className="flex flex-col items-center mb-4 md:mb-6 relative z-10"
       >
-        <div className="flex items-center gap-4 mb-1">
-          <div className="w-12 h-px bg-ink/20"></div>
-          <h1 className="text-5xl font-calligraphy text-ink tracking-[0.1em] drop-shadow-sm flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-4 mb-1">
+          <div className="w-8 md:w-12 h-px bg-ink/20"></div>
+          <h1 className="text-3xl md:text-5xl font-calligraphy text-ink tracking-[0.1em] drop-shadow-sm flex items-center gap-2 md:gap-3">
             <span>周易</span>
             <img 
               src={logo} 
               alt="Logo" 
-              className="w-12 h-12 object-contain mix-blend-multiply opacity-80"
+              className="w-8 h-8 md:w-12 md:h-12 object-contain mix-blend-multiply opacity-80"
             />
             <span>解卦</span>
           </h1>
-          <div className="w-12 h-px bg-ink/20"></div>
+          <div className="w-8 md:w-12 h-px bg-ink/20"></div>
         </div>
-        <p className="text-sm font-traditional text-ink/40 tracking-[0.5em] uppercase">Interpretation</p>
+        <p className="text-xs md:text-sm font-traditional text-ink/40 tracking-[0.3em] md:tracking-[0.5em] uppercase">Interpretation</p>
       </motion.div>
 
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 flex-1 min-h-0 mb-6">

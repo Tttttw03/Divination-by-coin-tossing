@@ -104,7 +104,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="h-screen parchment-bg relative flex flex-col items-center justify-between py-6 px-4 overflow-hidden paper-inner-shadow">
+    <div className="min-h-screen h-[100dvh] parchment-bg relative flex flex-col items-center justify-between py-4 md:py-6 px-4 overflow-hidden paper-inner-shadow">
       {/* 纸张纹理层 */}
       <div className="paper-texture"></div>
 
@@ -118,9 +118,9 @@ export const Home = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center relative z-10 mt-16"
+        className="text-center relative z-10 mt-8 md:mt-16"
       >
-        <h1 className="text-7xl font-calligraphy mb-3 text-ink drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] tracking-tight flex items-center justify-center gap-3">
+        <h1 className="text-5xl md:text-7xl font-calligraphy mb-2 md:mb-3 text-ink drop-shadow-[0_4px_8px_rgba(0,0,0,0.2)] tracking-tight flex items-center justify-center gap-3">
           <span>周易</span>
           <motion.img 
             initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
@@ -128,14 +128,14 @@ export const Home = () => {
             transition={{ duration: 1.2, ease: "easeOut" }}
             src={logo} 
             alt="Logo" 
-            className="w-12 h-12 object-contain mix-blend-multiply opacity-90"
+            className="w-10 h-10 md:w-12 md:h-12 object-contain mix-blend-multiply opacity-90"
           />
           <span>占卜</span>
         </h1>
-        <div className="flex items-center justify-center gap-4">
-          <div className="h-[1px] w-8 bg-ink/20"></div>
-          <p className="text-xl tracking-[0.3em] text-ink/70 font-traditional uppercase">Divination By Coin Tossing</p>
-          <div className="h-[1px] w-8 bg-ink/20"></div>
+        <div className="flex items-center justify-center gap-2 md:gap-4">
+          <div className="h-[1px] w-6 md:w-8 bg-ink/20"></div>
+          <p className="text-base md:text-xl tracking-[0.2em] md:tracking-[0.3em] text-ink/70 font-traditional uppercase">Divination By Coin Tossing</p>
+          <div className="h-[1px] w-6 md:w-8 bg-ink/20"></div>
         </div>
       </motion.div>
 
@@ -143,8 +143,8 @@ export const Home = () => {
       <div className="flex flex-col items-center gap-4 relative z-10 w-full max-w-4xl flex-1 justify-center">
         
         {/* 1. 掷币区域 (Independent top area) */}
-        <div className="w-full flex flex-col items-center gap-2 min-h-[160px] justify-center">
-          <div className="flex gap-8 items-center justify-center">
+        <div className="w-full flex flex-col items-center gap-2 min-h-[120px] md:min-h-[160px] justify-center scale-90 md:scale-100">
+          <div className="flex gap-4 md:gap-8 items-center justify-center">
             {currentCoins.map((coin, i) => (
               <Coin key={i} isTossing={isTossing} result={coin} />
             ))}
@@ -187,7 +187,7 @@ export const Home = () => {
         <motion.div 
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="scroll-container w-full max-w-xl aspect-[4/1]"
+          className="scroll-container w-full max-w-xl aspect-[4/1] scale-90 md:scale-100 -my-2 md:my-0"
         >
           <div className="scroll-end"></div>
           <div className="scroll-body flex-1 flex flex-col items-center justify-center p-4">
@@ -258,7 +258,7 @@ export const Home = () => {
                 onClick={handleToss}
                 disabled={isTossing || lines.length >= 6}
                 style={{ backgroundColor: "#b72326" }}
-                className="px-16 py-4 text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
+                className="px-10 md:px-16 py-3 md:py-4 text-white rounded-full text-xl md:text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-500 relative group overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 {isTossing ? "摇卦中..." : "摇掷铜钱"}
@@ -272,7 +272,7 @@ export const Home = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleGoToResult}
                 style={{ backgroundColor: "#b72326" }}
-                className="px-16 py-4 text-white rounded-full text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] transition-all duration-500 relative group overflow-hidden animate-pulse"
+                className="px-10 md:px-16 py-3 md:py-4 text-white rounded-full text-xl md:text-2xl font-calligraphy tracking-[0.3em] shadow-[0_15px_30px_-5px_rgba(183,35,38,0.3)] transition-all duration-500 relative group overflow-hidden animate-pulse"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 查看结果
