@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { HEXAGRAMS_DATA } from '../data/hexagrams';
 import { LineType } from '../types';
+import logo from '../assets/logo.svg';
 
 const HexagramSymbol = ({ lines, isChange = false }: { lines: LineType[], isChange?: boolean }) => {
   // 转换爻象为显示顺序（从下往上）
@@ -239,7 +240,7 @@ export const Result = () => {
           <h1 className="text-5xl font-calligraphy text-ink tracking-[0.1em] drop-shadow-sm flex items-center gap-3">
             <span>周易</span>
             <img 
-              src="logo.svg" 
+              src={logo} 
               alt="Logo" 
               className="w-12 h-12 object-contain mix-blend-multiply opacity-80"
             />
