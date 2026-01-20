@@ -32,23 +32,48 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const criticalAssets = [coinFront, coinBack, logo, bgMountains];
+    // 关键资源：影响第一眼视觉的资源
+    const criticalAssets = [logo, bgMountains];
+    // 次要资源：可以在后台加载，不阻塞首屏显示
+    const secondaryAssets = [coinFront, coinBack];
+    
     let loadedCount = 0;
+    let isTimedOut = false;
+
+    // 设置最大等待时间为 5 秒，防止加载过慢导致用户流失
+    const timeoutId = setTimeout(() => {
+      if (isLoading) {
+        isTimedOut = true;
+        setIsLoading(false);
+        console.log("Loading timed out, showing app anyway.");
+      }
+    }, 5000);
 
     const handleAssetLoad = () => {
+      if (isTimedOut) return;
       loadedCount++;
       if (loadedCount === criticalAssets.length) {
+        clearTimeout(timeoutId);
         // 稍微延迟一下，确保渲染平滑
-        setTimeout(() => setIsLoading(false), 800);
+        setTimeout(() => setIsLoading(false), 600);
       }
     };
 
+    // 优先加载关键资源
     criticalAssets.forEach(asset => {
       const img = new Image();
       img.src = asset;
       img.onload = handleAssetLoad;
-      img.onerror = handleAssetLoad; // 即使失败也继续，避免卡死
+      img.onerror = handleAssetLoad;
     });
+
+    // 后台加载次要资源（大图）
+    secondaryAssets.forEach(asset => {
+      const img = new Image();
+      img.src = asset;
+    });
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
